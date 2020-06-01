@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CertificatesProblem.Interfaces\CertificatesProblem.Interfaces.csproj" />
+    <ProjectReference Include="..\CertificatesProblem.Model\CertificatesProblem.Model.csproj" />
+  </ItemGroup>
+
+</Project>

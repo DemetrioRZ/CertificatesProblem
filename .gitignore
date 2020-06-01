@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/CertificatesProblem
+/CertificatesProblem/bin/Debug/netcoreapp3.1
+/CertificatesProblem/obj
+/CertificatesProblem.Interfaces/bin/Debug/netstandard2.0
+/CertificatesProblem.Interfaces/obj
+/CertificatesProblem.Logic/bin/Debug/netstandard2.0
+/CertificatesProblem.Logic/obj
+/CertificatesProblem.Model/bin/Debug/netstandard2.0
+/CertificatesProblem.Model/obj
