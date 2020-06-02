@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using CertificatesProblem.Interfaces;
 using CertificatesProblem.Model;
 using CertificatesProblem.Model.Exceptions;
@@ -20,8 +21,12 @@ namespace CertificatesProblem.Logic
                 targetCertificateToRoodNodeDict[targetCertificate] = rootNode;
             }
 
-            // todo: построить из словаря ответ
-            return string.Empty;
+            var responseBuilder = new StringBuilder();
+
+            foreach (var pair in targetCertificateToRoodNodeDict)
+                responseBuilder.AppendLine($"{pair.Key}: {pair.Value.ToFormula()}");
+
+            return responseBuilder.ToString();
         }
 
         private Node GetNextNode(string targetCertificate, ICollection<NodeDescription> nodeDescriptions, Node parentNode = null)
