@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CertificatesProblem.Interfaces\CertificatesProblem.Interfaces.csproj" />
+    <ProjectReference Include="..\CertificatesProblem.Logic\CertificatesProblem.Logic.csproj" />
     <ProjectReference Include="..\CertificatesProblem.Model\CertificatesProblem.Model.csproj" />
   </ItemGroup>
 

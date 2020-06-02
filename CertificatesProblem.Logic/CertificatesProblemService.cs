@@ -33,7 +33,7 @@ namespace CertificatesProblem.Logic
             
             if (nextNodeDescriptions.Count > 1)
             {
-                var bestAlternativeNode = GetBestAlternative(nextNodeDescriptions, nextNodeDescriptions);
+                var bestAlternativeNode = GetBestAlternative(nextNodeDescriptions, nodeDescriptions);
                 bestAlternativeNode.Parent = parentNode;
 
                 // todo: проверка на зацикленность назад по графу
@@ -90,10 +90,12 @@ namespace CertificatesProblem.Logic
                         alternative.Children.Add(subAlternativeNode);
                     }
                 }
+
+                alternatives.Add(alternative);
             }
 
-            alternatives.Sort(); // todo: заменить стратегией сортировки по переходам
-            return alternatives.FirstOrDefault(); 
+            //alternatives.Sort(); // todo: заменить стратегией сортировки по переходам
+            return alternatives.First(); 
         }
     }
 }

@@ -26,6 +26,7 @@ namespace CertificatesProblem
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<MappingModule>();
+            builder.RegisterModule<ServiceModule>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
