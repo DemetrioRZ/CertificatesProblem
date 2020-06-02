@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "22111f8d-a9e8-43ba-b235-d97fbddfe4e6",
+		"name": "Задача про справки",
+		"description": "https://habr.com/ru/article/499746/#rec188727187\r\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5000/certificatesproblem/solve",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nodesRules\": [\r\n        {\r\n            \"nodeId\": \"k1\",\r\n            \"inOuts\": [\r\n                {\r\n                    \"requiredInputs\": [\r\n                        {\r\n                            \"certificateId\": \"c1\"\r\n                        },\r\n                        {\r\n                            \"certificateId\": \"c2\"\r\n                        },\r\n                        {\r\n                            \"certificateId\": \"c3\"\r\n                        }\r\n                    ],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c0\"\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"nodeId\": \"k2\",\r\n            \"inOuts\": [\r\n                {\r\n                    \"requiredInputs\": [],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c1\"\r\n                    }\r\n                },\r\n                {\r\n                    \"requiredInputs\": [],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c4\"\r\n                    }\r\n                }\r\n            ]\r\n            \r\n        },\r\n        {\r\n            \"nodeId\": \"k3\",\r\n            \"inOuts\": [\r\n                {\r\n                    \"requiredInputs\": [],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c2\"\r\n                    }\r\n                },\r\n                {\r\n                    \"requiredInputs\": [\r\n                        {\r\n                            \"certificateId\": \"c1\"\r\n                        }\r\n                    ],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c3\"\r\n                    }\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"nodeId\": \"k4\",\r\n            \"inOuts\": [\r\n                {\r\n                    \"requiredInputs\": [\r\n                        {\r\n                            \"certificateId\": \"c4\"\r\n                        }\r\n                    ],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c1\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"targetCertificates\": [\r\n        {\r\n            \"certificateId\": \"c0\"\r\n        },\r\n        {\r\n            \"certificateId\": \"c4\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/certificatesproblem/solve",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"certificatesproblem",
+						"solve"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
