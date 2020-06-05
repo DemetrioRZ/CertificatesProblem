@@ -7,5 +7,7 @@ namespace CertificatesProblem.Dtos.Requests
         public ICollection<NodeRules> NodesRules { get; set; }
 
         public ICollection<Certificate> TargetCertificates { get; set; }
+
+        public Strategy Strategy { get; set; }
     }
 }

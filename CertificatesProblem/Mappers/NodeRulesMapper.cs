@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CertificatesProblem.Dtos.Requests;
 using CertificatesProblem.Interfaces.Mappers;
@@ -18,7 +19,9 @@ namespace CertificatesProblem.Mappers
                     {
                         Title = nodeRules.NodeId,
                         Inputs = nodeRuleInOut.RequiredInputs?.Select(x => x.CertificateId).ToList(),
-                        Output = nodeRuleInOut.Output.CertificateId
+                        Output = nodeRuleInOut.Output.CertificateId,
+                        TimeCost = new TimeSpan(nodeRuleInOut.TimeCost.Days, nodeRuleInOut.TimeCost.Hours, nodeRuleInOut.TimeCost.Minutes, 0),
+                        MoneyCost = nodeRuleInOut.MoneyCost
                     };
 
                     yield return node;
