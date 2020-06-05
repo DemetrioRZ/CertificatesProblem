@@ -10,6 +10,7 @@ namespace CertificatesProblem.IoC
             builder.RegisterType<NodeRulesMapper>().AsImplementedInterfaces();
             builder.RegisterType<TargetCertificatesMapper>().AsImplementedInterfaces();
             builder.RegisterType<SolutionMapper>().AsImplementedInterfaces();
+            builder.RegisterType<StrategyMapper>().AsImplementedInterfaces();
         }
     }
 }

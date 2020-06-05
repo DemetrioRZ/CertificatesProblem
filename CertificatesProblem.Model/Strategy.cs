@@ -1,4 +1,4 @@
-﻿namespace CertificatesProblem.Dtos.Requests
+﻿namespace CertificatesProblem.Model
 {
     public enum Strategy
     {

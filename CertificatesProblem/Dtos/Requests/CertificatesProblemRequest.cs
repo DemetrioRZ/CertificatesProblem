@@ -8,6 +8,6 @@ namespace CertificatesProblem.Dtos.Requests
 
         public ICollection<Certificate> TargetCertificates { get; set; }
 
-        public Strategy Strategy { get; set; }
+        public StrategyRequest Strategy { get; set; }
     }
 }
