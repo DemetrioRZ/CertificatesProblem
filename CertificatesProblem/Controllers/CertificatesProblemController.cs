@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CertificatesProblem.Dtos.Requests;
 using CertificatesProblem.Dtos.Results;
@@ -17,17 +16,20 @@ namespace CertificatesProblem.Controllers
     {
         private readonly IMapper<IEnumerable<NodeRules>, IEnumerable<NodeDescription>> _nodeRulesMapper;
         private readonly IMapper<IEnumerable<Certificate>, IEnumerable<string>> _targetCertificatesMapper;
+        private readonly IMapper<ICollection<Node>, CertificatesProblemSolution> _solutionMapper;
 
         private readonly ICertificatesProblemService _certificatesProblemService;
 
         public CertificatesProblemController(
             IMapper<IEnumerable<NodeRules>, IEnumerable<NodeDescription>> nodeRulesMapper, 
             IMapper<IEnumerable<Certificate>, IEnumerable<string>> targetCertificatesMapper, 
+            IMapper<ICollection<Node>, CertificatesProblemSolution> solutionMapper,
             ICertificatesProblemService certificatesProblemService)
         {
             _nodeRulesMapper = nodeRulesMapper;
             _targetCertificatesMapper = targetCertificatesMapper;
             _certificatesProblemService = certificatesProblemService;
+            _solutionMapper = solutionMapper;
         }
 
         [HttpPost("solve")]
@@ -38,9 +40,11 @@ namespace CertificatesProblem.Controllers
 
             try
             {
-                var solution = _certificatesProblemService.Solve(nodeDescriptions, targets);
+                var rootNodes = _certificatesProblemService.Solve(nodeDescriptions, targets);
 
-                return new JsonResult(new CertificatesProblemSolution { SolutionAsFormula = solution });
+                var solution = _solutionMapper.Map(rootNodes);
+
+                return new JsonResult(solution);
             }
             catch (CanNotBeSolvedException ex)
             {

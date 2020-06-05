@@ -1,7 +1,14 @@
-﻿namespace CertificatesProblem.Dtos.Results
+﻿using System.Collections.Generic;
+
+namespace CertificatesProblem.Dtos.Results
 {
     public class CertificatesProblemSolution
     {
-        public string SolutionAsFormula { get; set; }
+        public CertificatesProblemSolution()
+        {
+            SolutionsAsEquation = new List<SolutionForCertificate>();
+        }
+
+        public ICollection<SolutionForCertificate> SolutionsAsEquation { get; set; }
     }
 }

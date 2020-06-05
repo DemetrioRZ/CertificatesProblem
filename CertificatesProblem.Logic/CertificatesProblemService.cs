@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using CertificatesProblem.Interfaces;
 using CertificatesProblem.Model;
 using CertificatesProblem.Model.Exceptions;
@@ -10,23 +9,18 @@ namespace CertificatesProblem.Logic
 {
     public class CertificatesProblemService : ICertificatesProblemService
     {
-        public string Solve(ICollection<NodeDescription> nodeDescriptions, ICollection<string> targetCertificates)
+        public ICollection<Node> Solve(ICollection<NodeDescription> nodeDescriptions, ICollection<string> targetCertificates)
         {
-            var targetCertificateToRoodNodeDict = new Dictionary<string, Node>();
+            var rootNodes = new List<Node>();
 
             foreach (var targetCertificate in targetCertificates)
             {
                 var rootNode = GetNextNode(targetCertificate, nodeDescriptions);
 
-                targetCertificateToRoodNodeDict[targetCertificate] = rootNode;
+                rootNodes.Add(rootNode);
             }
 
-            var responseBuilder = new StringBuilder();
-
-            foreach (var pair in targetCertificateToRoodNodeDict)
-                responseBuilder.AppendLine($"{pair.Key}: {pair.Value.ToFormula()}");
-
-            return responseBuilder.ToString();
+            return rootNodes;
         }
 
         private Node GetNextNode(string targetCertificate, ICollection<NodeDescription> nodeDescriptions, Node parentNode = null)
