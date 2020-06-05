@@ -3,10 +3,8 @@ using CertificatesProblem.Model;
 
 namespace CertificatesProblem.Interfaces
 {
-    public interface IComparisonStrategy
+    public interface IComparisonStrategy : IComparer<Node>
     {
-        IComparer<Node> GetComparer();
-
         Strategy Strategy { get; }
     }
 }

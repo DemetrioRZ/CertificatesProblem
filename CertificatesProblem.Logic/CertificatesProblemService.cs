@@ -103,7 +103,7 @@ namespace CertificatesProblem.Logic
             }
 
             var comparisonStrategy = _comparisonStrategyProvider.GetComparisonStrategy(strategy);
-            alternatives.Sort(comparisonStrategy.GetComparer());
+            alternatives.Sort(comparisonStrategy);
             return alternatives.First(); 
         }
 
