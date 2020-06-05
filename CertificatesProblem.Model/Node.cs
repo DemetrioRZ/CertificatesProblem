@@ -19,5 +19,10 @@ namespace CertificatesProblem.Model
 
             return formula;
         }
+
+        public int GetTotalNodesCount()
+        {
+            return 1 + (Children?.Sum(x => x.GetTotalNodesCount()) ?? 0);
+        }
     }
 }

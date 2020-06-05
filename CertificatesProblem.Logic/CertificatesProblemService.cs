@@ -93,8 +93,15 @@ namespace CertificatesProblem.Logic
                 alternatives.Add(alternative);
             }
 
-            //alternatives.Sort(); // todo: заменить стратегией сортировки по переходам
+            alternatives.Sort(Comparison);
             return alternatives.First(); 
+        }
+
+        private int Comparison(Node x, Node y)
+        {
+            var xNodesCount = x.GetTotalNodesCount();
+            var yNodesCount = y.GetTotalNodesCount();
+            return xNodesCount.CompareTo(yNodesCount);
         }
     }
 }
