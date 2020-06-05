@@ -4,7 +4,7 @@ using CertificatesProblem.Model;
 
 namespace CertificatesProblem.Logic.Strategies
 {
-    public class LessMoneyCostStrategy : IComparisonStrategy, IComparer<Node>
+    public class LessTimeCostSerialVisitsStrategy : IComparisonStrategy, IComparer<Node>
     {
         public IComparer<Node> GetComparer()
         {
@@ -13,11 +13,11 @@ namespace CertificatesProblem.Logic.Strategies
 
         public int Compare(Node x, Node y)
         {
-            var xNodesCount = x.GetTotalMoneyCost();
-            var yNodesCount = y.GetTotalMoneyCost();
+            var xNodesCount = x.GetTotalTimeCostSerialVisits();
+            var yNodesCount = y.GetTotalTimeCostSerialVisits();
             return xNodesCount.CompareTo(yNodesCount);
         }
-
-        public Strategy Strategy => Strategy.LessMoneyCost;
+        
+        public Strategy Strategy => Strategy.LessTimeCostSerialVisits;
     }
 }

@@ -3,7 +3,8 @@
     public enum Strategy
     {
         LessNodesToVisit = 0,
-        LessTimeCost,
+        LessTimeCostSerialVisits,
+        LessTimeCostParallelVisits,
         LessMoneyCost
     }
 }

@@ -13,7 +13,7 @@ namespace CertificatesProblem.IoC
             builder.RegisterType<ComparisonStrategyProvider>().As<IComparisonStrategyProvider>();
             
             builder.RegisterType<LessNodesToVisitStrategy>().As<IComparisonStrategy>();
-            builder.RegisterType<LessTimeCostStrategy>().As<IComparisonStrategy>();
+            builder.RegisterType<LessTimeCostSerialVisitsStrategy>().As<IComparisonStrategy>();
             builder.RegisterType<LessMoneyCostStrategy>().As<IComparisonStrategy>();
         }
     }
