@@ -24,5 +24,19 @@ namespace CertificatesProblem.Model
         {
             return 1 + (Children?.Sum(x => x.GetTotalNodesCount()) ?? 0);
         }
+
+        public Node SearchParentCyclicReferences(HashSet<string> uniqueNodes = null)
+        {
+            if (uniqueNodes == null)
+                uniqueNodes = new HashSet<string>();
+
+            if (!uniqueNodes.Contains(Description.UniqueSignature))
+            {
+                uniqueNodes.Add(Description.UniqueSignature);
+                return Parent?.SearchParentCyclicReferences(uniqueNodes);
+            }
+
+            return this;
+        }
     }
 }

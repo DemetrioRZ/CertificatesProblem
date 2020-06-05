@@ -35,7 +35,7 @@ namespace CertificatesProblem.Logic
                 var bestAlternativeNode = GetBestAlternative(nextNodeDescriptions, nodeDescriptions);
                 bestAlternativeNode.Parent = parentNode;
 
-                // todo: проверка на зацикленность назад по графу
+                CheckCyclicReferences(bestAlternativeNode);
 
                 return bestAlternativeNode;
             }
@@ -59,7 +59,7 @@ namespace CertificatesProblem.Logic
                 }
             }
             
-            // todo: проверка на зацикленность назад по графу
+            CheckCyclicReferences(nextNode);
 
             return nextNode;
         }
@@ -102,6 +102,14 @@ namespace CertificatesProblem.Logic
             var xNodesCount = x.GetTotalNodesCount();
             var yNodesCount = y.GetTotalNodesCount();
             return xNodesCount.CompareTo(yNodesCount);
+        }
+
+        private void CheckCyclicReferences(Node newFoundNode)
+        {
+            var cyclicReferenceNode = newFoundNode.SearchParentCyclicReferences();
+
+            if (cyclicReferenceNode != null)
+                throw new CanNotBeSolvedException($"Найдена циклическая зависимость для {newFoundNode.Description.UniqueSignature}");
         }
     }
 }
