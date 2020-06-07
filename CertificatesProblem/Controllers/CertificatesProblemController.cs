@@ -16,16 +16,17 @@ namespace CertificatesProblem.Controllers
     {
         private readonly IMapper<IEnumerable<NodeRules>, IEnumerable<NodeDescription>> _nodeRulesMapper;
         private readonly IMapper<IEnumerable<Certificate>, IEnumerable<string>> _targetCertificatesMapper;
-        private readonly IMapper<ICollection<Node>, CertificatesProblemSolution> _solutionMapper;
         private readonly IMapper<StrategyRequest, Strategy> _strategyMapper;
+        private readonly IMapper<ICollection<Node>, CertificatesProblemSolution> _solutionMapper;
+        
 
         private readonly ICertificatesProblemService _certificatesProblemService;
 
         public CertificatesProblemController(
             IMapper<IEnumerable<NodeRules>, IEnumerable<NodeDescription>> nodeRulesMapper, 
             IMapper<IEnumerable<Certificate>, IEnumerable<string>> targetCertificatesMapper, 
-            IMapper<ICollection<Node>, CertificatesProblemSolution> solutionMapper,
             IMapper<StrategyRequest, Strategy> strategyMapper,
+            IMapper<ICollection<Node>, CertificatesProblemSolution> solutionMapper,
             ICertificatesProblemService certificatesProblemService)
         {
             _nodeRulesMapper = nodeRulesMapper;

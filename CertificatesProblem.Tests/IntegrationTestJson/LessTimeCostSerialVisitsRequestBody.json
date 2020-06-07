@@ -1,0 +1,124 @@
+{
+  "nodesRules": [
+    {
+      "nodeId": "k1",
+      "inOuts": [
+        {
+          "requiredInputs": [
+            {
+              "certificateId": "c1"
+            },
+            {
+              "certificateId": "c2"
+            },
+            {
+              "certificateId": "c3"
+            }
+          ],
+          "output": {
+            "certificateId": "c0"
+          },
+          "timeCost": {
+            "days": 1,
+            "hours": 2,
+            "minutes": 3
+          },
+          "moneyCost": 123.01
+        }
+      ]
+    },
+    {
+      "nodeId": "k2",
+      "inOuts": [
+        {
+          "requiredInputs": [],
+          "output": {
+            "certificateId": "c1"
+          },
+          "timeCost": {
+            "days": 2,
+            "hours": 0,
+            "minutes": 0
+          },
+          "moneyCost": 300.00
+        },
+        {
+          "requiredInputs": [],
+          "output": {
+            "certificateId": "c4"
+          },
+          "timeCost": {
+            "days": 0,
+            "hours": 1,
+            "minutes": 0
+          },
+          "moneyCost": 200.00
+        }
+      ]
+
+    },
+    {
+      "nodeId": "k3",
+      "inOuts": [
+        {
+          "requiredInputs": [],
+          "output": {
+            "certificateId": "c2"
+          },
+          "timeCost": {
+            "days": 1,
+            "hours": 2,
+            "minutes": 3
+          },
+          "moneyCost": 100.01
+        },
+        {
+          "requiredInputs": [
+            {
+              "certificateId": "c1"
+            }
+          ],
+          "output": {
+            "certificateId": "c3"
+          },
+          "timeCost": {
+            "days": 1,
+            "hours": 2,
+            "minutes": 3
+          },
+          "moneyCost": 400.10
+        }
+      ]
+    },
+    {
+      "nodeId": "k4",
+      "inOuts": [
+        {
+          "requiredInputs": [
+            {
+              "certificateId": "c4"
+            }
+          ],
+          "output": {
+            "certificateId": "c1"
+          },
+          "timeCost": {
+            "days": 0,
+            "hours": 1,
+            "minutes": 0
+          },
+          "moneyCost": 50.00
+        }
+      ]
+    }
+  ],
+  "targetCertificates": [
+    {
+      "certificateId": "c0"
+    },
+    {
+      "certificateId": "c3"
+    }
+  ],
+  "strategy": "LessTimeCostSerialVisits"
+}

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesProblem", "CertificatesProblem\CertificatesProblem.csproj", "{57940396-100B-446F-B642-CE9AEA9CED0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificatesProblem", "CertificatesProblem\CertificatesProblem.csproj", "{57940396-100B-446F-B642-CE9AEA9CED0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesProblem.Logic", "CertificatesProblem.Logic\CertificatesProblem.Logic.csproj", "{F87BB01D-663F-4471-87EB-640EAC26FD18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificatesProblem.Logic", "CertificatesProblem.Logic\CertificatesProblem.Logic.csproj", "{F87BB01D-663F-4471-87EB-640EAC26FD18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesProblem.Interfaces", "CertificatesProblem.Interfaces\CertificatesProblem.Interfaces.csproj", "{8143C95A-DA34-4216-9FC5-FE12B82AEE2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificatesProblem.Interfaces", "CertificatesProblem.Interfaces\CertificatesProblem.Interfaces.csproj", "{8143C95A-DA34-4216-9FC5-FE12B82AEE2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesProblem.Model", "CertificatesProblem.Model\CertificatesProblem.Model.csproj", "{7DA3A547-E0C0-44D7-85DF-F5D17C57FE12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificatesProblem.Model", "CertificatesProblem.Model\CertificatesProblem.Model.csproj", "{7DA3A547-E0C0-44D7-85DF-F5D17C57FE12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificatesProblem.IntegrationTests", "CertificatesProblem.Tests\CertificatesProblem.IntegrationTests.csproj", "{AA7BA484-C9ED-4475-8AB5-C04B09EAF730}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7DA3A547-E0C0-44D7-85DF-F5D17C57FE12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DA3A547-E0C0-44D7-85DF-F5D17C57FE12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DA3A547-E0C0-44D7-85DF-F5D17C57FE12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA7BA484-C9ED-4475-8AB5-C04B09EAF730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA7BA484-C9ED-4475-8AB5-C04B09EAF730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA7BA484-C9ED-4475-8AB5-C04B09EAF730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA7BA484-C9ED-4475-8AB5-C04B09EAF730}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

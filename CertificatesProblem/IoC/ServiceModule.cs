@@ -14,6 +14,7 @@ namespace CertificatesProblem.IoC
             
             builder.RegisterType<LessNodesToVisitStrategy>().As<IComparisonStrategy>();
             builder.RegisterType<LessTimeCostSerialVisitsStrategy>().As<IComparisonStrategy>();
+            builder.RegisterType<LessTimeCostParallelVisitsStrategy>().As<IComparisonStrategy>();
             builder.RegisterType<LessMoneyCostStrategy>().As<IComparisonStrategy>();
         }
     }

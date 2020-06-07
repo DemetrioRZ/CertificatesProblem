@@ -3,7 +3,8 @@
     public enum StrategyRequest
     {
         LessNodesToVisit = 0,
-        LessTimeCost,
+        LessTimeCostSerialVisits,
+        LessTimeCostParallelVisits,
         LessMoneyCost
     }
 }

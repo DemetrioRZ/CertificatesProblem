@@ -11,3 +11,7 @@
 /CertificatesProblem.Logic/obj
 /CertificatesProblem.Model/bin/Debug/netstandard2.0
 /CertificatesProblem.Model/obj
+/CertificatesProblem.Logic.Tests/obj
+/CertificatesProblem.Logic.Tests/bin/Debug/netcoreapp3.1
+/CertificatesProblem.Tests/bin/Debug/netcoreapp3.1
+/CertificatesProblem.Tests/obj

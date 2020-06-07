@@ -1,0 +1,12 @@
+{
+  "solutionsAsEquation": [
+    {
+      "certificateId": "c0",
+      "solutionAsEquation": "k1<out:c0>(k4<out:c1>(k2<out:c4>()), k3<out:c2>(), k3<out:c3>(k4<out:c1>(k2<out:c4>()))) = c0"
+    },
+    {
+      "certificateId": "c3",
+      "solutionAsEquation": "k3<out:c3>(k4<out:c1>(k2<out:c4>())) = c3"
+    }
+  ]
+}
