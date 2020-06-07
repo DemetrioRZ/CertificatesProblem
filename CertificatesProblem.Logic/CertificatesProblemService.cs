@@ -22,7 +22,7 @@ namespace CertificatesProblem.Logic
 
             foreach (var targetCertificate in targetCertificates)
             {
-                var rootNode = GetNextNode(targetCertificate, nodeDescriptions, strategy, existingCertificates);
+                var rootNode = GetNextNode(targetCertificate, nodeDescriptions, strategy);
 
                 rootNodes.Add(rootNode);
             }
@@ -34,7 +34,7 @@ namespace CertificatesProblem.Logic
             return rootNodes;
         }
 
-        private Node GetNextNode(string targetCertificate, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, ICollection<string> existingCertificates, Node parentNode = null)
+        private Node GetNextNode(string targetCertificate, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, Node parentNode = null)
         {
             if (parentNode != null && CheckIsCyclicReference(parentNode))
                 return null;
@@ -46,7 +46,7 @@ namespace CertificatesProblem.Logic
             
             if (nextNodeDescriptions.Count > 1)
             {
-                var bestAlternativeNode = GetBestAlternative(nextNodeDescriptions, nodeDescriptions, strategy, existingCertificates);
+                var bestAlternativeNode = GetBestAlternative(nextNodeDescriptions, nodeDescriptions, strategy);
                 bestAlternativeNode.Parent = parentNode;
 
                 return bestAlternativeNode;
@@ -58,12 +58,12 @@ namespace CertificatesProblem.Logic
                 Parent = parentNode
             };
 
-            FillSubNodesFor(nextNode, nodeDescriptions, strategy, existingCertificates);
+            FillSubNodesFor(nextNode, nodeDescriptions, strategy);
             
             return nextNode;
         }
 
-        private Node GetBestAlternative(ICollection<NodeDescription> alternativesDescriptions, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, ICollection<string> existingCertificates)
+        private Node GetBestAlternative(ICollection<NodeDescription> alternativesDescriptions, ICollection<NodeDescription> nodeDescriptions, Strategy strategy)
         {
             if (alternativesDescriptions.Select(x => x.Output.ToLower()).Distinct().Count() != 1)
                 throw new ArgumentException(nameof(alternativesDescriptions));
@@ -78,7 +78,7 @@ namespace CertificatesProblem.Logic
                     Parent = null
                 };
 
-                FillSubNodesFor(alternative, nodeDescriptions, strategy, existingCertificates);
+                FillSubNodesFor(alternative, nodeDescriptions, strategy);
 
                 alternatives.Add(alternative);
             }
@@ -88,13 +88,13 @@ namespace CertificatesProblem.Logic
             return alternatives.First(); 
         }
 
-        private void FillSubNodesFor(Node parentNode, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, ICollection<string> existingCertificates)
+        private void FillSubNodesFor(Node parentNode, ICollection<NodeDescription> nodeDescriptions, Strategy strategy)
         {
             if (parentNode.Description.Inputs != null && parentNode.Description.Inputs.Any())
             {
                 foreach (var parentInputCertificate in parentNode.Description.Inputs)
                 {
-                    var subNode = GetNextNode(parentInputCertificate, nodeDescriptions, strategy, existingCertificates, parentNode);
+                    var subNode = GetNextNode(parentInputCertificate, nodeDescriptions, strategy, parentNode);
 
                     if (subNode == null)
                         continue;

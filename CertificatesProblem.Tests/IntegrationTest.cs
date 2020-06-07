@@ -59,7 +59,7 @@ namespace CertificatesProblem.Tests
 
         [Test]
         [TestCase("CyclicReferencesRequestBody.json", "CyclicReferencesResponse.txt")]
-        public async Task Solve_CyclicReferences_ReturnsBadRequest(string requestBodyJsonName, string responseJsonName)
+        public async Task Solve_UnresolvedCyclicReferences_ReturnsBadRequest(string requestBodyJsonName, string responseJsonName)
         {
             var requestUri = "certificatesproblem/solve";
 
