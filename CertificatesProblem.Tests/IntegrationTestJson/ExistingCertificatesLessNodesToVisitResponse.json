@@ -1,0 +1,12 @@
+{
+  "solutionsAsEquation": [
+    {
+      "certificateId": "c0",
+      "solutionAsEquation": "Existing<out:c0>() = c0"
+    },
+    {
+      "certificateId": "c3",
+      "solutionAsEquation": "k3<out:c3>(Existing<out:c1>()) = c3"
+    }
+  ]
+}

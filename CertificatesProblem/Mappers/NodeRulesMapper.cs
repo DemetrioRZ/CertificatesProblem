@@ -7,10 +7,12 @@ using CertificatesProblem.Model;
 
 namespace CertificatesProblem.Mappers
 {
-    public class NodeRulesMapper : IMapper<IEnumerable<NodeRules>, IEnumerable<NodeDescription>>
+    public class NodeRulesMapper : IMapper<ICollection<NodeRules>, ICollection<NodeDescription>>
     {
-        public IEnumerable<NodeDescription> Map(IEnumerable<NodeRules> nodesRules)
+        public ICollection<NodeDescription> Map(ICollection<NodeRules> nodesRules)
         {
+            var result = new List<NodeDescription>();
+
             foreach (var nodeRules in nodesRules)
             {
                 foreach (var nodeRuleInOut in nodeRules.InOuts)
@@ -24,9 +26,11 @@ namespace CertificatesProblem.Mappers
                         MoneyCost = nodeRuleInOut.MoneyCost
                     };
 
-                    yield return node;
+                    result.Add(node);
                 }
             }
+
+            return result;
         }
     }
 }

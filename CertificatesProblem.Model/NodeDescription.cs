@@ -8,6 +8,8 @@ namespace CertificatesProblem.Model
     {
         public string Title { get; set; }
 
+        
+
         public ICollection<string> Inputs { get; set; }
 
         public string Output { get; set; }

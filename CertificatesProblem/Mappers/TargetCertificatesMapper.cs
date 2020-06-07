@@ -5,11 +5,11 @@ using CertificatesProblem.Interfaces.Mappers;
 
 namespace CertificatesProblem.Mappers
 {
-    public class TargetCertificatesMapper : IMapper<IEnumerable<Certificate>, IEnumerable<string>>
+    public class TargetCertificatesMapper : IMapper<ICollection<TargetCertificate>, ICollection<string>>
     {
-        public IEnumerable<string> Map(IEnumerable<Certificate> targetCertificates)
+        public ICollection<string> Map(ICollection<TargetCertificate> targetCertificates)
         {
-            return targetCertificates.Select(x => x.CertificateId);
+            return targetCertificates.Select(x => x.CertificateId).ToList();
         }
     }
 }

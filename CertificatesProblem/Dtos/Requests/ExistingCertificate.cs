@@ -1,6 +1,6 @@
 ﻿namespace CertificatesProblem.Dtos.Requests
 {
-    public class Certificate
+    public class ExistingCertificate
     {
         public string CertificateId { get; set; }
     }

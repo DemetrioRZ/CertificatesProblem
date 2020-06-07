@@ -14,8 +14,9 @@ namespace CertificatesProblem.Controllers
     [Route("[controller]")]
     public class CertificatesProblemController : ControllerBase
     {
-        private readonly IMapper<IEnumerable<NodeRules>, IEnumerable<NodeDescription>> _nodeRulesMapper;
-        private readonly IMapper<IEnumerable<Certificate>, IEnumerable<string>> _targetCertificatesMapper;
+        private readonly IMapper<ICollection<NodeRules>, ICollection<NodeDescription>> _nodeRulesMapper;
+        private readonly IMapper<ICollection<TargetCertificate>, ICollection<string>> _targetCertificatesMapper;
+        private readonly IMapper<ICollection<ExistingCertificate>, ICollection<string>> _existingCertificatesMapper;
         private readonly IMapper<StrategyRequest, Strategy> _strategyMapper;
         private readonly IMapper<ICollection<Node>, CertificatesProblemSolution> _solutionMapper;
         
@@ -23,8 +24,9 @@ namespace CertificatesProblem.Controllers
         private readonly ICertificatesProblemService _certificatesProblemService;
 
         public CertificatesProblemController(
-            IMapper<IEnumerable<NodeRules>, IEnumerable<NodeDescription>> nodeRulesMapper, 
-            IMapper<IEnumerable<Certificate>, IEnumerable<string>> targetCertificatesMapper, 
+            IMapper<ICollection<NodeRules>, ICollection<NodeDescription>> nodeRulesMapper, 
+            IMapper<ICollection<TargetCertificate>, ICollection<string>> targetCertificatesMapper, 
+            IMapper<ICollection<ExistingCertificate>, ICollection<string>> existingCertificatesMapper,
             IMapper<StrategyRequest, Strategy> strategyMapper,
             IMapper<ICollection<Node>, CertificatesProblemSolution> solutionMapper,
             ICertificatesProblemService certificatesProblemService)
@@ -32,6 +34,7 @@ namespace CertificatesProblem.Controllers
             _nodeRulesMapper = nodeRulesMapper;
             _targetCertificatesMapper = targetCertificatesMapper;
             _certificatesProblemService = certificatesProblemService;
+            _existingCertificatesMapper = existingCertificatesMapper;
             _strategyMapper = strategyMapper;
             _solutionMapper = solutionMapper;
         }
@@ -39,13 +42,14 @@ namespace CertificatesProblem.Controllers
         [HttpPost("solve")]
         public ActionResult<CertificatesProblemSolution> Solve([FromBody] CertificatesProblemRequest request)
         {
-            var nodeDescriptions = _nodeRulesMapper.Map(request.NodesRules).ToList();
-            var targets = _targetCertificatesMapper.Map(request.TargetCertificates).ToList();
+            var nodeDescriptions = _nodeRulesMapper.Map(request.NodesRules);
+            var targets = _targetCertificatesMapper.Map(request.TargetCertificates);
+            var existingCertificates = _existingCertificatesMapper.Map(request.ExistingCertificates);
             var strategy = _strategyMapper.Map(request.Strategy);
 
             try
             {
-                var rootNodes = _certificatesProblemService.Solve(nodeDescriptions, targets, strategy);
+                var rootNodes = _certificatesProblemService.Solve(nodeDescriptions, targets, existingCertificates, strategy);
 
                 var solution = _solutionMapper.Map(rootNodes);
 

@@ -5,9 +5,9 @@ namespace CertificatesProblem.Dtos.Requests
 {
     public class InOut
     {
-        public ICollection<Certificate> RequiredInputs { get; set; }
+        public ICollection<TargetCertificate> RequiredInputs { get; set; }
 
-        public Certificate Output { get; set; }
+        public TargetCertificate Output { get; set; }
 
         public TimeCost TimeCost { get; set; }
 

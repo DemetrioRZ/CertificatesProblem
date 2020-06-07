@@ -13,6 +13,8 @@ namespace CertificatesProblem.Model
 
         public Guid Id { get; }
 
+        public NodeType NodeType { get; set; }
+
         public NodeDescription Description { get; set; }
 
         public ICollection<Node> Children { get; set; }
@@ -50,29 +52,46 @@ namespace CertificatesProblem.Model
 
         public TimeSpan GetTotalTimeCostParallelVisits()
         {
-            var startNodes = GetStartNodesForRoot();
+            var startNodes = GetStartChildNodes();
             return startNodes.Max(x => x.GetTotalTimeCostForBranch());
         }
 
-        private TimeSpan GetTotalTimeCostForBranch()
+        public TimeSpan GetTotalTimeCostForBranch()
         {
             return Parent != null 
                 ? Description.TimeCost + Parent.GetTotalTimeCostForBranch()
                 : Description.TimeCost;
         }
 
-        public ICollection<Node> GetStartNodesForRoot()
+        public ICollection<Node> GetStartChildNodes()
         {
             var startNodes = new List<Node>();
 
             if (Children != null)
                 foreach (var child in Children)
-                    startNodes.AddRange(child.GetStartNodesForRoot());
+                    startNodes.AddRange(child.GetStartChildNodes());
             
             if (Children == null)
                 startNodes.Add(this);
 
             return startNodes;
+        }
+
+        public ICollection<Node> GetChildNodesWithOutput(string certificateId, bool doNotIncludeStubs = true)
+        {
+            var childNodesWithOutput = new List<Node>();
+
+            if (Description.Output.Equals(certificateId, StringComparison.InvariantCultureIgnoreCase))
+            {
+                childNodesWithOutput.Add(this);
+                return childNodesWithOutput;
+            }
+
+            if (Children != null)
+                foreach (var child in Children)
+                    childNodesWithOutput.AddRange(child.GetChildNodesWithOutput(certificateId));
+            
+            return childNodesWithOutput;
         }
 
         public Node SearchParentCyclicReferences(HashSet<string> uniqueNodes = null)

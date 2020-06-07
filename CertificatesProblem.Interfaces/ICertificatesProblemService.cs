@@ -5,6 +5,6 @@ namespace CertificatesProblem.Interfaces
 {
     public interface ICertificatesProblemService
     {
-        ICollection<Node> Solve(ICollection<NodeDescription> nodeDescriptions, ICollection<string> targetCertificates, Strategy strategy);
+        ICollection<Node> Solve(ICollection<NodeDescription> nodeDescriptions, ICollection<string> targetCertificates, ICollection<string> existingCertificates, Strategy strategy);
     }
 }

@@ -37,6 +37,7 @@ namespace CertificatesProblem.Tests
         [TestCase("LessMoneyCostRequestBody", "LessMoneyCostResponse")]
         [TestCase("LessTimeCostSerialVisitsRequestBody", "LessTimeCostSerialVisitsResponse")]
         [TestCase("LessTimeCostParallelVisitsRequestBody", "LessTimeCostParallelVisitsResponse")]
+        [TestCase("ExistingCertificatesLessNodesToVisitRequestBody", "ExistingCertificatesLessNodesToVisitResponse")]
         public async Task Solve_ForEachStrategy_CorrectSolution(string requestBodyJsonName, string responseJsonName)
         {
             var requestUri = "certificatesproblem/solve";

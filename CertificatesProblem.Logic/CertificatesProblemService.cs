@@ -16,7 +16,7 @@ namespace CertificatesProblem.Logic
             _comparisonStrategyProvider = comparisonStrategyProvider;
         }
 
-        public ICollection<Node> Solve(ICollection<NodeDescription> nodeDescriptions, ICollection<string> targetCertificates, Strategy strategy)
+        public ICollection<Node> Solve(ICollection<NodeDescription> nodeDescriptions, ICollection<string> targetCertificates, ICollection<string> existingCertificates, Strategy strategy)
         {
             var rootNodes = new List<Node>();
 
@@ -27,6 +27,8 @@ namespace CertificatesProblem.Logic
                 rootNodes.Add(rootNode);
             }
 
+            UseExistingCertificates(rootNodes, existingCertificates, strategy);
+            
             return rootNodes;
         }
 
@@ -107,6 +109,41 @@ namespace CertificatesProblem.Logic
 
             if (cyclicReferenceNode != null)
                 throw new CanNotBeSolvedException($"Найдена циклическая зависимость для {newFoundNode.Description.UniqueSignature}");
+        }
+
+        private void UseExistingCertificates(ICollection<Node> rootNodes, ICollection<string> existingCertificates, Strategy strategy)
+        {
+            foreach (var existingCertificate in existingCertificates)
+            {
+                var candidatesForReplacement =
+                    rootNodes.SelectMany(x => x.GetChildNodesWithOutput(existingCertificate))
+                        .Where(x => x.NodeType != NodeType.StubForExistingCertificate).ToList();
+
+                if (!candidatesForReplacement.Any())
+                    continue;
+
+                var comparisonStrategy = _comparisonStrategyProvider.GetComparisonStrategy(strategy);
+                candidatesForReplacement.Sort(comparisonStrategy);
+                var nodeToReplace = candidatesForReplacement.Last();
+
+                var stubNode = new Node
+                {
+                    Description = new NodeDescription{ Output = existingCertificate, Title = "Existing" }, 
+                    NodeType = NodeType.StubForExistingCertificate
+                };
+
+                var parent = nodeToReplace.Parent;
+                if (parent == null)
+                {
+                    rootNodes.Remove(nodeToReplace);
+                    rootNodes.Add(stubNode);
+                }
+                else
+                {
+                    parent.Children.Remove(nodeToReplace);
+                    parent.Children.Add(stubNode);
+                }
+            }
         }
     }
 }

@@ -6,7 +6,9 @@ namespace CertificatesProblem.Dtos.Requests
     {
         public ICollection<NodeRules> NodesRules { get; set; }
 
-        public ICollection<Certificate> TargetCertificates { get; set; }
+        public ICollection<TargetCertificate> TargetCertificates { get; set; }
+
+        public ICollection<ExistingCertificate> ExistingCertificates { get; set; }
 
         public StrategyRequest Strategy { get; set; }
     }
