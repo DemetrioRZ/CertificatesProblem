@@ -53,18 +53,7 @@ namespace CertificatesProblem.Logic
                 Parent = parentNode
             };
 
-            if (nextNode.Description.Inputs != null && nextNode.Description.Inputs.Any())
-            {
-                foreach (var nextNodeInputCertificate in nextNode.Description.Inputs)
-                {
-                    var subNextNode = GetNextNode(nextNodeInputCertificate, nodeDescriptions, strategy, nextNode);
-                
-                    if (nextNode.Children == null)
-                        nextNode.Children = new List<Node>();
-
-                    nextNode.Children.Add(subNextNode);
-                }
-            }
+            FillSubNodesFor(nextNode, nodeDescriptions, strategy);
             
             CheckCyclicReferences(nextNode);
 
@@ -86,18 +75,7 @@ namespace CertificatesProblem.Logic
                     Parent = null
                 };
 
-                if (alternative.Description.Inputs != null && alternative.Description.Inputs.Any())
-                {
-                    foreach (var alternativeInputCertificate in alternative.Description.Inputs)
-                    {
-                        var subAlternativeNode = GetNextNode(alternativeInputCertificate, nodeDescriptions, strategy, alternative);
-                
-                        if (alternative.Children == null)
-                            alternative.Children = new List<Node>();
-
-                        alternative.Children.Add(subAlternativeNode);
-                    }
-                }
+                FillSubNodesFor(alternative, nodeDescriptions, strategy);
 
                 alternatives.Add(alternative);
             }
@@ -105,6 +83,22 @@ namespace CertificatesProblem.Logic
             var comparisonStrategy = _comparisonStrategyProvider.GetComparisonStrategy(strategy);
             alternatives.Sort(comparisonStrategy);
             return alternatives.First(); 
+        }
+
+        private void FillSubNodesFor(Node parentNode, ICollection<NodeDescription> nodeDescriptions, Strategy strategy)
+        {
+            if (parentNode.Description.Inputs != null && parentNode.Description.Inputs.Any())
+            {
+                foreach (var parentInputCertificate in parentNode.Description.Inputs)
+                {
+                    var subAlternativeNode = GetNextNode(parentInputCertificate, nodeDescriptions, strategy, parentNode);
+                
+                    if (parentNode.Children == null)
+                        parentNode.Children = new List<Node>();
+
+                    parentNode.Children.Add(subAlternativeNode);
+                }
+            }
         }
 
         private void CheckCyclicReferences(Node newFoundNode)
