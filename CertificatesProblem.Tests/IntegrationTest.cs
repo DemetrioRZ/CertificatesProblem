@@ -33,17 +33,17 @@ namespace CertificatesProblem.Tests
         }
 
         [Test]
-        [TestCase("LessNodesToVisitRequestBody", "LessNodesToVisitResponse")]
-        [TestCase("LessMoneyCostRequestBody", "LessMoneyCostResponse")]
-        [TestCase("LessTimeCostSerialVisitsRequestBody", "LessTimeCostSerialVisitsResponse")]
-        [TestCase("LessTimeCostParallelVisitsRequestBody", "LessTimeCostParallelVisitsResponse")]
-        [TestCase("ExistingCertificatesLessNodesToVisitRequestBody", "ExistingCertificatesLessNodesToVisitResponse")]
-        public async Task Solve_ForEachStrategy_CorrectSolution(string requestBodyJsonName, string responseJsonName)
+        [TestCase("LessNodesToVisitRequestBody.json", "LessNodesToVisitResponse.json")]
+        [TestCase("LessMoneyCostRequestBody.json", "LessMoneyCostResponse.json")]
+        [TestCase("LessTimeCostSerialVisitsRequestBody.json", "LessTimeCostSerialVisitsResponse.json")]
+        [TestCase("LessTimeCostParallelVisitsRequestBody.json", "LessTimeCostParallelVisitsResponse.json")]
+        [TestCase("ExistingCertificatesRequestBody.json", "ExistingCertificatesResponse.json")]
+        public async Task Solve_RegressTests_CorrectSolution(string requestBodyJsonName, string responseJsonName)
         {
             var requestUri = "certificatesproblem/solve";
 
-            var requestBody = GetEmbeddedResource($"IntegrationTestJson\\{requestBodyJsonName}.json");
-            var expectedJson = GetEmbeddedResource($"IntegrationTestJson\\{responseJsonName}.json");
+            var requestBody = GetEmbeddedResource($"IntegrationTestJson\\{requestBodyJsonName}");
+            var expectedJson = GetEmbeddedResource($"IntegrationTestJson\\{responseJsonName}");
             var expected = JsonConvert.DeserializeObject<CertificatesProblemSolution>(expectedJson);
 
             var response = await _httpClient.PostAsync(requestUri, new StringContent(requestBody, Encoding.UTF8, "application/json"));
@@ -54,6 +54,23 @@ namespace CertificatesProblem.Tests
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             Assert.AreEqual(string.Join("; ", expected.SolutionsAsEquation.OrderBy(x => x.CertificateId)), 
                 string.Join("; ", result.SolutionsAsEquation.OrderBy(x => x.CertificateId)));
+        }
+
+        [Test]
+        [TestCase("CyclicReferencesRequestBody.json", "CyclicReferencesResponse.txt")]
+        public async Task Solve_CyclicReferences_ReturnsBadRequest(string requestBodyJsonName, string responseJsonName)
+        {
+            var requestUri = "certificatesproblem/solve";
+
+            var requestBody = GetEmbeddedResource($"IntegrationTestJson\\{requestBodyJsonName}");
+            var expectedText = GetEmbeddedResource($"IntegrationTestJson\\{responseJsonName}");
+            
+            var response = await _httpClient.PostAsync(requestUri, new StringContent(requestBody, Encoding.UTF8, "application/json"));
+
+            var responseText = await response.Content.ReadAsStringAsync();
+            
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
+            Assert.AreEqual(expectedText, responseText);
         }
 
         private string GetEmbeddedResource(string embeddedResourceName)

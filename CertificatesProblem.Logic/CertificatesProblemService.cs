@@ -34,6 +34,9 @@ namespace CertificatesProblem.Logic
 
         private Node GetNextNode(string targetCertificate, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, Node parentNode = null)
         {
+            if (parentNode != null)
+                CheckCyclicReferences(parentNode);
+
             var nextNodeDescriptions = nodeDescriptions.Where(x => string.Equals(x.Output, targetCertificate, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
             if (!nextNodeDescriptions.Any())
@@ -43,8 +46,6 @@ namespace CertificatesProblem.Logic
             {
                 var bestAlternativeNode = GetBestAlternative(nextNodeDescriptions, nodeDescriptions, strategy);
                 bestAlternativeNode.Parent = parentNode;
-
-                CheckCyclicReferences(bestAlternativeNode);
 
                 return bestAlternativeNode;
             }
@@ -57,8 +58,6 @@ namespace CertificatesProblem.Logic
 
             FillSubNodesFor(nextNode, nodeDescriptions, strategy);
             
-            CheckCyclicReferences(nextNode);
-
             return nextNode;
         }
 
@@ -103,12 +102,12 @@ namespace CertificatesProblem.Logic
             }
         }
 
-        private void CheckCyclicReferences(Node newFoundNode)
+        private void CheckCyclicReferences(Node node)
         {
-            var cyclicReferenceNode = newFoundNode.SearchParentCyclicReferences();
+            var cyclicReferenceNode = node.SearchParentCyclicReferences();
 
             if (cyclicReferenceNode != null)
-                throw new CanNotBeSolvedException($"Найдена циклическая зависимость для {newFoundNode.Description.UniqueSignature}");
+                throw new CanNotBeSolvedException($"Найдена циклическая зависимость для справки {node.Description.Output} узел {node.Description.UniqueSignature}");
         }
 
         private void UseExistingCertificates(ICollection<Node> rootNodes, ICollection<string> existingCertificates, Strategy strategy)
