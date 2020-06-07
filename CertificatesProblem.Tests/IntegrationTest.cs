@@ -18,7 +18,7 @@ namespace CertificatesProblem.Tests
     /// Запустить приложение, в тестах указать BaseAddress (по умолчанию указан http://localhost:5000/), убрать Ignore, запустить тесты
     /// </summary>
     [TestFixture]
-    //[Ignore("Integration")]
+    [Ignore("Integration")]
     public class IntegrationTest
     {
         private readonly HttpClient _httpClient;
