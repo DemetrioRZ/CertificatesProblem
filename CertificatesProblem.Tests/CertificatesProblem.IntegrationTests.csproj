@@ -19,6 +19,8 @@
     <None Remove="IntegrationTestJson\LessTimeCostParallelVisitsResponse.json" />
     <None Remove="IntegrationTestJson\LessTimeCostSerialVisitsRequestBody.json" />
     <None Remove="IntegrationTestJson\LessTimeCostSerialVisitsResponse.json" />
+    <None Remove="IntegrationTestJson\ResolvedCyclicReferencesRequestBody.json" />
+    <None Remove="IntegrationTestJson\ResolvedCyclicReferencesResponse.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +40,8 @@
     <EmbeddedResource Include="IntegrationTestJson\LessTimeCostParallelVisitsResponse.json" />
     <EmbeddedResource Include="IntegrationTestJson\LessTimeCostSerialVisitsRequestBody.json" />
     <EmbeddedResource Include="IntegrationTestJson\LessTimeCostSerialVisitsResponse.json" />
+    <EmbeddedResource Include="IntegrationTestJson\ResolvedCyclicReferencesRequestBody.json" />
+    <EmbeddedResource Include="IntegrationTestJson\ResolvedCyclicReferencesResponse.json" />
   </ItemGroup>
 
   <ItemGroup>

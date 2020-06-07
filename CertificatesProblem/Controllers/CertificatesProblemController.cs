@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CertificatesProblem.Dtos.Requests;
 using CertificatesProblem.Dtos.Results;
 using CertificatesProblem.Interfaces;

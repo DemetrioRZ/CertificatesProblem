@@ -1,0 +1,8 @@
+{
+  "solutionsAsEquation": [
+    {
+      "certificateId": "c0",
+      "solutionAsEquation": "k1<out:c0>(Existing<out:c1>()) = c0"
+    }
+  ]
+}

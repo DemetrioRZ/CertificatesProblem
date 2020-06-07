@@ -3,4 +3,9 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::AA7BA484-C9ED-4475-8AB5-C04B09EAF730::.NETCoreApp,Version=v3.1::CertificatesProblem.Tests.IntegrationTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a2a5e970_002D19f8_002D43f2_002Dabd0_002D68fe82c4a28f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="IntegrationTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::AA7BA484-C9ED-4475-8AB5-C04B09EAF730::.NETCoreApp,Version=v3.1::CertificatesProblem.Tests.IntegrationTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

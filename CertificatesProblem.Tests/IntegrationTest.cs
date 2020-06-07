@@ -38,6 +38,7 @@ namespace CertificatesProblem.Tests
         [TestCase("LessTimeCostSerialVisitsRequestBody.json", "LessTimeCostSerialVisitsResponse.json")]
         [TestCase("LessTimeCostParallelVisitsRequestBody.json", "LessTimeCostParallelVisitsResponse.json")]
         [TestCase("ExistingCertificatesRequestBody.json", "ExistingCertificatesResponse.json")]
+        [TestCase("ResolvedCyclicReferencesRequestBody.json", "ResolvedCyclicReferencesResponse.json")]
         public async Task Solve_RegressTests_CorrectSolution(string requestBodyJsonName, string responseJsonName)
         {
             var requestUri = "certificatesproblem/solve";

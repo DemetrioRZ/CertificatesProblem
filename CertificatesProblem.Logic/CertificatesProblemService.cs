@@ -22,20 +22,22 @@ namespace CertificatesProblem.Logic
 
             foreach (var targetCertificate in targetCertificates)
             {
-                var rootNode = GetNextNode(targetCertificate, nodeDescriptions, strategy);
+                var rootNode = GetNextNode(targetCertificate, nodeDescriptions, strategy, existingCertificates);
 
                 rootNodes.Add(rootNode);
             }
+
+            TryResolveCyclicReferences(rootNodes, existingCertificates);
 
             UseExistingCertificates(rootNodes, existingCertificates, strategy);
             
             return rootNodes;
         }
 
-        private Node GetNextNode(string targetCertificate, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, Node parentNode = null)
+        private Node GetNextNode(string targetCertificate, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, ICollection<string> existingCertificates, Node parentNode = null)
         {
-            if (parentNode != null)
-                CheckCyclicReferences(parentNode);
+            if (parentNode != null && CheckIsCyclicReference(parentNode))
+                return null;
 
             var nextNodeDescriptions = nodeDescriptions.Where(x => string.Equals(x.Output, targetCertificate, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
@@ -44,7 +46,7 @@ namespace CertificatesProblem.Logic
             
             if (nextNodeDescriptions.Count > 1)
             {
-                var bestAlternativeNode = GetBestAlternative(nextNodeDescriptions, nodeDescriptions, strategy);
+                var bestAlternativeNode = GetBestAlternative(nextNodeDescriptions, nodeDescriptions, strategy, existingCertificates);
                 bestAlternativeNode.Parent = parentNode;
 
                 return bestAlternativeNode;
@@ -56,12 +58,12 @@ namespace CertificatesProblem.Logic
                 Parent = parentNode
             };
 
-            FillSubNodesFor(nextNode, nodeDescriptions, strategy);
+            FillSubNodesFor(nextNode, nodeDescriptions, strategy, existingCertificates);
             
             return nextNode;
         }
 
-        private Node GetBestAlternative(ICollection<NodeDescription> alternativesDescriptions, ICollection<NodeDescription> nodeDescriptions, Strategy strategy)
+        private Node GetBestAlternative(ICollection<NodeDescription> alternativesDescriptions, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, ICollection<string> existingCertificates)
         {
             if (alternativesDescriptions.Select(x => x.Output.ToLower()).Distinct().Count() != 1)
                 throw new ArgumentException(nameof(alternativesDescriptions));
@@ -76,7 +78,7 @@ namespace CertificatesProblem.Logic
                     Parent = null
                 };
 
-                FillSubNodesFor(alternative, nodeDescriptions, strategy);
+                FillSubNodesFor(alternative, nodeDescriptions, strategy, existingCertificates);
 
                 alternatives.Add(alternative);
             }
@@ -86,28 +88,36 @@ namespace CertificatesProblem.Logic
             return alternatives.First(); 
         }
 
-        private void FillSubNodesFor(Node parentNode, ICollection<NodeDescription> nodeDescriptions, Strategy strategy)
+        private void FillSubNodesFor(Node parentNode, ICollection<NodeDescription> nodeDescriptions, Strategy strategy, ICollection<string> existingCertificates)
         {
             if (parentNode.Description.Inputs != null && parentNode.Description.Inputs.Any())
             {
                 foreach (var parentInputCertificate in parentNode.Description.Inputs)
                 {
-                    var subAlternativeNode = GetNextNode(parentInputCertificate, nodeDescriptions, strategy, parentNode);
-                
+                    var subNode = GetNextNode(parentInputCertificate, nodeDescriptions, strategy, existingCertificates, parentNode);
+
+                    if (subNode == null)
+                        continue;
+
                     if (parentNode.Children == null)
                         parentNode.Children = new List<Node>();
 
-                    parentNode.Children.Add(subAlternativeNode);
+                    parentNode.Children.Add(subNode);
                 }
             }
         }
 
-        private void CheckCyclicReferences(Node node)
+        private bool CheckIsCyclicReference(Node node)
         {
             var cyclicReferenceNode = node.SearchParentCyclicReferences();
 
-            if (cyclicReferenceNode != null)
-                throw new CanNotBeSolvedException($"Найдена циклическая зависимость для справки {node.Description.Output} узел {node.Description.UniqueSignature}");
+            if (cyclicReferenceNode == null)
+                return false;
+
+            node.Children = null;
+            node.NodeType = NodeType.CyclicReference;
+
+            return true;
         }
 
         private void UseExistingCertificates(ICollection<Node> rootNodes, ICollection<string> existingCertificates, Strategy strategy)
@@ -142,6 +152,60 @@ namespace CertificatesProblem.Logic
                     parent.Children.Remove(nodeToReplace);
                     parent.Children.Add(stubNode);
                 }
+            }
+        }
+
+        private void TryResolveCyclicReferences(ICollection<Node> rootNodes, ICollection<string> existingCertificates)
+        {
+            var cyclicReferences = rootNodes.SelectMany(x => x.GetChildNodesCyclicReferences()).ToList();
+            var resolvedReferences = new HashSet<Guid>();
+            foreach (var cyclicReference in cyclicReferences)
+            {
+                var isCyclicReferenceResolved = false;
+                var parent = cyclicReference.Parent;
+                var signature = cyclicReference.Description.UniqueSignature;
+                while (parent != null)
+                {
+                    if (resolvedReferences.Contains(parent.Id))
+                    {
+                        isCyclicReferenceResolved = true;
+                        break;
+                    }
+
+                    if (existingCertificates.Contains(parent.Description.Output))
+                    {
+                        var stubNode = new Node
+                        {
+                            Description = new NodeDescription{ Output = parent.Description.Output, Title = "Existing" }, 
+                            NodeType = NodeType.StubForExistingCertificate
+                        };
+                        existingCertificates.Remove(parent.Description.Output);
+
+                        var upperParent = parent.Parent;
+                        if (upperParent == null)
+                        {
+                            rootNodes.Remove(parent);
+                            rootNodes.Add(stubNode);
+                        }
+                        else
+                        {
+                            upperParent.Children.Remove(parent);
+                            upperParent.Children.Add(stubNode);
+                        }
+
+                        resolvedReferences.Add(parent.Id);
+                        isCyclicReferenceResolved = true;
+                        break;
+                    }
+
+                    if (!existingCertificates.Contains(parent.Description.Output) && signature.Equals(parent.Description.UniqueSignature))
+                        break;
+
+                    parent = parent.Parent;
+                }
+
+                if (!isCyclicReferenceResolved)
+                    throw new CanNotBeSolvedException($"Найдена циклическая зависимость для справки {cyclicReference.Description.Output} узел {cyclicReference.Description.UniqueSignature}");
             }
         }
     }

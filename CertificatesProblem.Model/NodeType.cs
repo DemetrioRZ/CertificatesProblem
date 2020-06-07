@@ -3,6 +3,7 @@
     public enum NodeType
     {
         NodeToVisit = 0,
-        StubForExistingCertificate
+        StubForExistingCertificate,
+        CyclicReference
     }
 }

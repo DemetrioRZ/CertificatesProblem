@@ -1,0 +1,57 @@
+{
+  "nodesRules": [
+    {
+      "nodeId": "k1",
+      "inOuts": [
+        {
+          "requiredInputs": [
+            {
+              "certificateId": "c1"
+            }
+          ],
+          "output": {
+            "certificateId": "c0"
+          },
+          "timeCost": {
+            "days": 1,
+            "hours": 2,
+            "minutes": 3
+          },
+          "moneyCost": 123.01
+        }
+      ]
+    },
+    {
+      "nodeId": "k2",
+      "inOuts": [
+        {
+          "requiredInputs": [
+            {
+              "certificateId": "c0"
+            }
+          ],
+          "output": {
+            "certificateId": "c1"
+          },
+          "timeCost": {
+            "days": 1,
+            "hours": 2,
+            "minutes": 3
+          },
+          "moneyCost": 300.03
+        }
+      ]
+    }
+  ],
+  "targetCertificates": [
+    {
+      "certificateId": "c0"
+    }
+  ],
+  "existingCertificates": [
+    {
+      "certificateId": "c1"
+    }
+  ],
+  "strategy": "LessNodesToVisit"
+}

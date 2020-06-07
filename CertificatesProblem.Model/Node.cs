@@ -25,7 +25,8 @@ namespace CertificatesProblem.Model
         {
             var subNodes = Children != null ? string.Join(", ", Children?.Select(x => x.ToEquation(false))) : string.Empty;
             var rightPartOfEquation = isFullEquation ? $" = {Description.Output}" : string.Empty;
-            var formula = $"{Description.Title}<out:{Description.Output}>({subNodes}){rightPartOfEquation}";
+            var cyclicReference = NodeType == NodeType.CyclicReference ? "[CyclicReference]" : string.Empty;
+            var formula = $"{Description.Title}{cyclicReference}<out:{Description.Output}>({subNodes}){rightPartOfEquation}";
 
             return formula;
         }
@@ -77,7 +78,7 @@ namespace CertificatesProblem.Model
             return startNodes;
         }
 
-        public ICollection<Node> GetChildNodesWithOutput(string certificateId, bool doNotIncludeStubs = true)
+        public ICollection<Node> GetChildNodesWithOutput(string certificateId)
         {
             var childNodesWithOutput = new List<Node>();
 
@@ -92,6 +93,23 @@ namespace CertificatesProblem.Model
                     childNodesWithOutput.AddRange(child.GetChildNodesWithOutput(certificateId));
             
             return childNodesWithOutput;
+        }
+
+        public ICollection<Node> GetChildNodesCyclicReferences()
+        {
+            var cyclicReferences = new List<Node>();
+
+            if (NodeType == NodeType.CyclicReference)
+            {
+                cyclicReferences.Add(this);
+                return cyclicReferences;
+            }
+
+            if (Children != null)
+                foreach (var child in Children)
+                    cyclicReferences.AddRange(child.GetChildNodesCyclicReferences());
+            
+            return cyclicReferences;
         }
 
         public Node SearchParentCyclicReferences(HashSet<string> uniqueNodes = null)

@@ -152,13 +152,42 @@
 			"response": []
 		},
 		{
-			"name": "CyclicReference certificatesproblem/solve",
+			"name": "CyclicReference Unresolved certificatesproblem/solve",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"nodesRules\": [\r\n        {\r\n            \"nodeId\": \"k1\",\r\n            \"inOuts\": [\r\n                {\r\n                    \"requiredInputs\": [\r\n                        {\r\n                            \"certificateId\": \"c1\"\r\n                        }\r\n                    ],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c0\"\r\n                    },\r\n                    \"timeCost\": {\r\n                    \t\"days\": 1,\r\n                    \t\"hours\": 2,\r\n                    \t\"minutes\": 3\r\n                    },\r\n                    \"moneyCost\": 123.01\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"nodeId\": \"k2\",\r\n            \"inOuts\": [\r\n                {\r\n                    \"requiredInputs\": [\r\n                    \t{\r\n                            \"certificateId\": \"c0\"\r\n                        }\r\n                    ],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c1\"\r\n                    },\r\n                    \"timeCost\": {\r\n                    \t\"days\": 1,\r\n                    \t\"hours\": 2,\r\n                    \t\"minutes\": 3\r\n                    },\r\n                    \"moneyCost\": 300.03\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"targetCertificates\": [\r\n        {\r\n            \"certificateId\": \"c0\"\r\n        }\r\n    ],\r\n    \"existingCertificates\": [],\r\n    \"strategy\": \"LessNodesToVisit\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/certificatesproblem/solve",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"certificatesproblem",
+						"solve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CyclicReference ResolvedByExisting certificatesproblem/solve",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nodesRules\": [\r\n        {\r\n            \"nodeId\": \"k1\",\r\n            \"inOuts\": [\r\n                {\r\n                    \"requiredInputs\": [\r\n                        {\r\n                            \"certificateId\": \"c1\"\r\n                        }\r\n                    ],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c0\"\r\n                    },\r\n                    \"timeCost\": {\r\n                    \t\"days\": 1,\r\n                    \t\"hours\": 2,\r\n                    \t\"minutes\": 3\r\n                    },\r\n                    \"moneyCost\": 123.01\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"nodeId\": \"k2\",\r\n            \"inOuts\": [\r\n                {\r\n                    \"requiredInputs\": [\r\n                    \t{\r\n                            \"certificateId\": \"c0\"\r\n                        }\r\n                    ],\r\n                    \"output\": {\r\n                        \"certificateId\": \"c1\"\r\n                    },\r\n                    \"timeCost\": {\r\n                    \t\"days\": 1,\r\n                    \t\"hours\": 2,\r\n                    \t\"minutes\": 3\r\n                    },\r\n                    \"moneyCost\": 300.03\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"targetCertificates\": [\r\n        {\r\n            \"certificateId\": \"c0\"\r\n        }\r\n    ],\r\n    \"existingCertificates\": [\r\n    \t{\r\n            \"certificateId\": \"c1\"\r\n        }\r\n    ],\r\n    \"strategy\": \"LessNodesToVisit\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
