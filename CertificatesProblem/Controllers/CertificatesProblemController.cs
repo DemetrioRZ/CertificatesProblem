@@ -14,7 +14,7 @@ namespace CertificatesProblem.Controllers
     public class CertificatesProblemController : ControllerBase
     {
         private readonly IMapper<ICollection<NodeRules>, ICollection<NodeDescription>> _nodeRulesMapper;
-        private readonly IMapper<ICollection<TargetCertificate>, ICollection<string>> _targetCertificatesMapper;
+        private readonly IMapper<ICollection<Certificate>, ICollection<string>> _targetCertificatesMapper;
         private readonly IMapper<ICollection<ExistingCertificate>, ICollection<string>> _existingCertificatesMapper;
         private readonly IMapper<StrategyRequest, Strategy> _strategyMapper;
         private readonly IMapper<ICollection<Node>, CertificatesProblemSolution> _solutionMapper;
@@ -24,7 +24,7 @@ namespace CertificatesProblem.Controllers
 
         public CertificatesProblemController(
             IMapper<ICollection<NodeRules>, ICollection<NodeDescription>> nodeRulesMapper, 
-            IMapper<ICollection<TargetCertificate>, ICollection<string>> targetCertificatesMapper, 
+            IMapper<ICollection<Certificate>, ICollection<string>> targetCertificatesMapper, 
             IMapper<ICollection<ExistingCertificate>, ICollection<string>> existingCertificatesMapper,
             IMapper<StrategyRequest, Strategy> strategyMapper,
             IMapper<ICollection<Node>, CertificatesProblemSolution> solutionMapper,
@@ -38,6 +38,11 @@ namespace CertificatesProblem.Controllers
             _solutionMapper = solutionMapper;
         }
 
+        /// <summary>
+        /// Запрос решения задачи о справках.
+        /// </summary>
+        /// <param name="request">тело запроса</param>
+        /// <returns>Решение в виде уравнения</returns>
         [HttpPost("solve")]
         public ActionResult<CertificatesProblemSolution> Solve([FromBody] CertificatesProblemRequest request)
         {

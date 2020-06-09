@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Autofac;
 using CertificatesProblem.IoC;
@@ -6,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace CertificatesProblem
 {
@@ -23,6 +27,26 @@ namespace CertificatesProblem
         {
             services.AddControllers()
                 .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "CertificatesProblem API",
+                    Description = "A simple example solution for certificates problem ASP.NET Core Web API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Dmitry Romanov",
+                        Email = string.Empty,
+                        Url = new Uri("https://github.com/DemetrioRZ"),
+                    }
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -38,6 +62,14 @@ namespace CertificatesProblem
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CertificatesProblem API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 

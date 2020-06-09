@@ -11,7 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace CertificatesProblem.Tests
+namespace CertificatesProblem.IntegrationTests
 {
     /// <summary>
     /// Для проверки регресса. Запускает набор подготовленных запросов по одному на каждую стратегию решения. Проверяет правильность ответов.

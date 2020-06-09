@@ -3,14 +3,29 @@ using System.Collections.Generic;
 
 namespace CertificatesProblem.Dtos.Requests
 {
+    /// <summary>
+    /// Используется для описания конторы, принимаемые справки и выдаваемая по ним справка.
+    /// </summary>
     public class InOut
     {
-        public ICollection<TargetCertificate> RequiredInputs { get; set; }
+        /// <summary>
+        /// Требуемые на вход справки.
+        /// </summary>
+        public ICollection<Certificate> RequiredInputs { get; set; }
 
-        public TargetCertificate Output { get; set; }
+        /// <summary>
+        /// Выдаваемая справка.
+        /// </summary>
+        public Certificate Output { get; set; }
 
+        /// <summary>
+        /// Затраты времени на выдачу справки.
+        /// </summary>
         public TimeCost TimeCost { get; set; }
 
+        /// <summary>
+        /// Затраты денег на выдачу справки.
+        /// </summary>
         public decimal MoneyCost { get; set; }
     }
 }
