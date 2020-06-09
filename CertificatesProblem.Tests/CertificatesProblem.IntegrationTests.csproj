@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="IntegrationTestJson\CyclicReferencesRequestBody.json" />
-    <None Remove="IntegrationTestJson\CyclicReferencesResponse.txt" />
     <None Remove="IntegrationTestJson\ExistingCertificatesRequestBody.json" />
     <None Remove="IntegrationTestJson\ExistingCertificatesResponse.json" />
     <None Remove="IntegrationTestJson\LessMoneyCostRequestBody.json" />
@@ -21,11 +19,13 @@
     <None Remove="IntegrationTestJson\LessTimeCostSerialVisitsResponse.json" />
     <None Remove="IntegrationTestJson\ResolvedCyclicReferencesRequestBody.json" />
     <None Remove="IntegrationTestJson\ResolvedCyclicReferencesResponse.json" />
+    <None Remove="IntegrationTestJson\UnresolvedCyclicReferencesRequestBody.json" />
+    <None Remove="IntegrationTestJson\UnresolvedCyclicReferencesResponse.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="IntegrationTestJson\CyclicReferencesRequestBody.json" />
-    <EmbeddedResource Include="IntegrationTestJson\CyclicReferencesResponse.txt" />
+    <EmbeddedResource Include="IntegrationTestJson\UnresolvedCyclicReferencesRequestBody.json" />
+    <EmbeddedResource Include="IntegrationTestJson\UnresolvedCyclicReferencesResponse.txt" />
     <EmbeddedResource Include="IntegrationTestJson\ExistingCertificatesRequestBody.json" />
     <EmbeddedResource Include="IntegrationTestJson\ExistingCertificatesResponse.json" />
     <EmbeddedResource Include="IntegrationTestJson\LessMoneyCostRequestBody.json" />
