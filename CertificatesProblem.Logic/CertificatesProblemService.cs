@@ -141,17 +141,7 @@ namespace CertificatesProblem.Logic
                     NodeType = NodeType.StubForExistingCertificate
                 };
 
-                var parent = nodeToReplace.Parent;
-                if (parent == null)
-                {
-                    rootNodes.Remove(nodeToReplace);
-                    rootNodes.Add(stubNode);
-                }
-                else
-                {
-                    parent.Children.Remove(nodeToReplace);
-                    parent.Children.Add(stubNode);
-                }
+                ReplaceNodeWithExistingCertificate(rootNodes, nodeToReplace, stubNode);
             }
         }
 
@@ -179,20 +169,10 @@ namespace CertificatesProblem.Logic
                             Description = new NodeDescription{ Output = parent.Description.Output, Title = "Existing" }, 
                             NodeType = NodeType.StubForExistingCertificate
                         };
+                        
+                        ReplaceNodeWithExistingCertificate(rootNodes, parent, stubNode);
+                        
                         existingCertificates.Remove(parent.Description.Output);
-
-                        var upperParent = parent.Parent;
-                        if (upperParent == null)
-                        {
-                            rootNodes.Remove(parent);
-                            rootNodes.Add(stubNode);
-                        }
-                        else
-                        {
-                            upperParent.Children.Remove(parent);
-                            upperParent.Children.Add(stubNode);
-                        }
-
                         resolvedReferences.Add(parent.Id);
                         isCyclicReferenceResolved = true;
                         break;
@@ -206,6 +186,21 @@ namespace CertificatesProblem.Logic
 
                 if (!isCyclicReferenceResolved)
                     throw new CanNotBeSolvedException($"Найдена циклическая зависимость для справки {cyclicReference.Description.Output} узел {cyclicReference.Description.UniqueSignature}");
+            }
+        }
+
+        private void ReplaceNodeWithExistingCertificate(ICollection<Node> rootNodes, Node nodeToReplace, Node stubNode)
+        {
+            var nodeToReplaceParent = nodeToReplace.Parent;
+            if (nodeToReplaceParent == null)
+            {
+                rootNodes.Remove(nodeToReplace);
+                rootNodes.Add(stubNode);
+            }
+            else
+            {
+                nodeToReplaceParent.Children.Remove(nodeToReplace);
+                nodeToReplaceParent.Children.Add(stubNode);
             }
         }
     }
